@@ -10,16 +10,13 @@ def load_data(filepath):
     return content
 
 
-def tokenize_text(text_string, speed='fast'):
-    if speed == 'fast':
-        return text_string.split()
-    elif speed == 'slow':
-        return re.split(r'[;,\s]\s*', text_string)
+def tokenize_text(text_string):
+    words_list = re.split(r'(?:\W|\s)\s*', text_string)
+    return filter(bool, words_list)
 
 
-def get_most_frequent_words(text_string, top=10):
-    words_list = tokenize_text(text_string, speed='slow')
-    counter = Counter(words_list)
+def get_most_frequent_words(text_string, top=30):
+    counter = Counter(text_string)
     return counter.most_common(top)
 
 
@@ -53,6 +50,8 @@ if __name__ == '__main__':
 
     loaded_text = load_data(args.filepath)
 
-    top_words = get_most_frequent_words(loaded_text)
+    tokenized_data = tokenize_text(loaded_text)
+
+    top_words = get_most_frequent_words(tokenized_data)
 
     print_top_words(top_words)
