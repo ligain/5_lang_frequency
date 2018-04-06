@@ -15,8 +15,8 @@ def tokenize_text(text_string):
     return filter(bool, words_list)
 
 
-def get_most_frequent_words(text_string, top=30):
-    counter = Counter(text_string)
+def get_most_frequent_words(words_list, top=10):
+    counter = Counter(words_list)
     return counter.most_common(top)
 
 
